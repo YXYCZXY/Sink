@@ -43,6 +43,13 @@
       "when": 1789995773114,
       "tag": "0005_tan_karma",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1794975339374,
+      "tag": "0006_next_iron_fist",
+      "breakpoints": true
     }
   ]
 }

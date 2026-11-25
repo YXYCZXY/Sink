@@ -1,0 +1,43 @@
+{
+  "utm": {
+    "sources": "來源列表",
+    "new_source": "新增來源",
+    "filter_placeholder": "快速篩選...",
+    "fallback": "預設兜底",
+    "view_shortlinks": "檢視短鏈",
+    "delete_source": "刪除來源",
+    "medium": "媒介",
+    "campaign": "活動 / 位置",
+    "term": "關鍵字",
+    "content": "內容分支",
+    "category": "類別",
+    "theme": "主題",
+    "add_medium": "新增媒介",
+    "add_campaign": "新增活動",
+    "add_term": "新增關鍵字",
+    "add_category": "新增類別",
+    "add_theme": "新增主題",
+    "shortlinks_title": "{source} 關聯短鏈",
+    "source_dialog_description": "建立新的 UTM 來源，之後可為其設定媒介、活動等分支。",
+    "option_dialog_description": "為目前來源新增一個可選值。",
+    "name": "顯示名稱",
+    "token": "識別值",
+    "token_hint": "僅限小寫字母與數字，可用 - 或 _ 連接",
+    "create": "建立",
+    "add": "新增",
+    "empty_options": "尚無可選項",
+    "loading": "正在載入 UTM 設定…",
+    "load_failed": "載入 UTM 設定失敗。",
+    "save_failed": "儲存失敗，請重試。",
+    "fallback_locked": "預設兜底來源不可刪除",
+    "delete_option": "刪除 {label}",
+    "delete_source_title": "刪除來源「{source}」？",
+    "delete_source_description": "將同時刪除該來源下的所有分支設定。",
+    "delete_source_action": "刪除來源",
+    "validation": {
+      "required": "必填欄位",
+      "token_format": "僅限小寫字母與數字，可用 - 或 _ 連接",
+      "duplicate": "該識別值已存在"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import type { Component } from 'vue'
-import { Activity, ChartArea, FolderSync, Link, ScanSearch } from '@lucide/vue'
+import { Activity, ChartArea, FolderSync, Link, ScanSearch, Tags } from '@lucide/vue'
 import { computed } from 'vue'
 import { useRoute } from '#imports'
 
@@ -19,6 +19,11 @@ export const DASHBOARD_ROUTES = {
     paths: ['/dashboard/link'],
     titleKey: 'nav.links',
     icon: Link,
+  },
+  utm: {
+    paths: ['/dashboard/utm'],
+    titleKey: 'nav.utm',
+    icon: Tags,
   },
   analysis: {
     paths: ['/dashboard/analysis'],

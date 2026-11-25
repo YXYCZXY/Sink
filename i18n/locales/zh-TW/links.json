@@ -42,7 +42,11 @@
       "tag_label": "標籤",
       "all_tags": "全部標籤",
       "tags_loading": "正在載入標籤…",
-      "tags_failed": "標籤載入失敗。"
+      "tags_failed": "標籤載入失敗。",
+      "utm_source_label": "UTM 來源",
+      "all_utm_sources": "全部來源",
+      "utm_sources_loading": "正在載入 UTM 來源…",
+      "utm_sources_failed": "UTM 來源載入失敗。"
     },
     "stats": {
       "retry": "重新載入 {slug} 的統計資料",
@@ -117,6 +121,12 @@
       "utm_campaign": "UTM 活動",
       "utm_term": "UTM 關鍵字",
       "utm_content": "UTM 內容",
+      "utm_content_category": "類別",
+      "utm_content_theme": "主題",
+      "utm_content_asset": "素材 ID",
+      "utm_content_category_placeholder": "選擇類別",
+      "utm_content_theme_placeholder": "選擇主題",
+      "utm_content_asset_placeholder": "例如 hero-01",
       "utm_apply": "套用",
       "utm_clear": "清除",
       "utm_invalid_url": "請輸入有效的 URL 以預覽並套用 UTM 參數。",

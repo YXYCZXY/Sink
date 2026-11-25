@@ -1,0 +1,43 @@
+{
+  "utm": {
+    "sources": "Lista de origens",
+    "new_source": "Nova origem",
+    "filter_placeholder": "Filtro rápido...",
+    "fallback": "Predefinição",
+    "view_shortlinks": "Ver ligações",
+    "delete_source": "Eliminar origem",
+    "medium": "Meio",
+    "campaign": "Campanha / Posição",
+    "term": "Palavra-chave",
+    "content": "Conteúdo",
+    "category": "Categoria",
+    "theme": "Tema",
+    "add_medium": "Adicionar meio",
+    "add_campaign": "Adicionar campanha",
+    "add_term": "Adicionar palavra-chave",
+    "add_category": "Adicionar categoria",
+    "add_theme": "Adicionar tema",
+    "shortlinks_title": "Ligações associadas a {source}",
+    "source_dialog_description": "Crie uma nova origem de UTM e depois configure os seus ramos (meio, campanha, etc.).",
+    "option_dialog_description": "Adicione uma opção para a origem atual.",
+    "name": "Nome de apresentação",
+    "token": "Identificador",
+    "token_hint": "Apenas letras minúsculas e números, unidos por - ou _",
+    "create": "Criar",
+    "add": "Adicionar",
+    "empty_options": "Ainda sem opções",
+    "loading": "A carregar predefinições de UTM…",
+    "load_failed": "Falha ao carregar as predefinições de UTM.",
+    "save_failed": "Falha ao guardar as alterações. Tenta novamente.",
+    "fallback_locked": "A origem predefinida não pode ser eliminada",
+    "delete_option": "Eliminar {label}",
+    "delete_source_title": "Eliminar a origem {source}?",
+    "delete_source_description": "Isto também remove todos os ramos configurados para esta origem.",
+    "delete_source_action": "Eliminar origem",
+    "validation": {
+      "required": "Campo obrigatório",
+      "token_format": "Apenas letras minúsculas e números, unidos por - ou _",
+      "duplicate": "Este identificador já existe"
+    }
+  }
+}

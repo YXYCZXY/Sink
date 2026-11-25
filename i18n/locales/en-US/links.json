@@ -42,7 +42,11 @@
       "tag_label": "Tag",
       "all_tags": "All tags",
       "tags_loading": "Loading tags…",
-      "tags_failed": "Failed to load tags."
+      "tags_failed": "Failed to load tags.",
+      "utm_source_label": "UTM source",
+      "all_utm_sources": "All sources",
+      "utm_sources_loading": "Loading UTM sources…",
+      "utm_sources_failed": "Failed to load UTM sources."
     },
     "stats": {
       "retry": "Retry statistics for {slug}",
@@ -117,6 +121,12 @@
       "utm_campaign": "UTM Campaign",
       "utm_term": "UTM Term",
       "utm_content": "UTM Content",
+      "utm_content_category": "Category",
+      "utm_content_theme": "Theme",
+      "utm_content_asset": "Asset ID",
+      "utm_content_category_placeholder": "Select a category",
+      "utm_content_theme_placeholder": "Select a theme",
+      "utm_content_asset_placeholder": "e.g. hero-01",
       "utm_apply": "Apply",
       "utm_clear": "Clear",
       "utm_invalid_url": "Enter a valid URL to preview and apply UTM parameters.",

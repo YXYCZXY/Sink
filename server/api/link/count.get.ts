@@ -27,6 +27,13 @@ defineRouteMeta({
         description: 'Exact normalized tag filter',
       },
       {
+        name: 'utm_source',
+        in: 'query',
+        required: false,
+        schema: { type: 'string' },
+        description: 'Exact utm_source query parameter in the destination URL',
+      },
+      {
         name: 'status',
         in: 'query',
         required: false,

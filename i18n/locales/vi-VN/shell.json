@@ -26,6 +26,7 @@
   },
   "nav": {
     "links": "Liên kết",
+    "utm": "UTM",
     "analysis": "Phân tích",
     "realtime": "Thời gian thực",
     "check": "Check",

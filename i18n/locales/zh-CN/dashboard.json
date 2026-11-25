@@ -64,6 +64,7 @@
       "city": "城市",
       "referer": "来源",
       "slug": "短链",
+      "utmSource": "平台",
       "language": "语言",
       "timezone": "时区",
       "device": "设备",

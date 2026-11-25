@@ -26,6 +26,7 @@
   },
   "nav": {
     "links": "链接",
+    "utm": "UTM",
     "analysis": "分析",
     "realtime": "实时",
     "check": "检测",

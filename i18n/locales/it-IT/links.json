@@ -42,7 +42,11 @@
       "tag_label": "Tag",
       "all_tags": "Tutti i tag",
       "tags_loading": "Caricamento tag…",
-      "tags_failed": "Impossibile caricare i tag."
+      "tags_failed": "Impossibile caricare i tag.",
+      "utm_source_label": "Sorgente UTM",
+      "all_utm_sources": "Tutte le sorgenti",
+      "utm_sources_loading": "Caricamento sorgenti UTM…",
+      "utm_sources_failed": "Impossibile caricare le sorgenti UTM."
     },
     "stats": {
       "retry": "Riprova le statistiche di {slug}",
@@ -117,6 +121,12 @@
       "utm_campaign": "Campagna UTM",
       "utm_term": "Termine UTM",
       "utm_content": "Contenuto UTM",
+      "utm_content_category": "Categoria",
+      "utm_content_theme": "Tema",
+      "utm_content_asset": "ID materiale",
+      "utm_content_category_placeholder": "Seleziona una categoria",
+      "utm_content_theme_placeholder": "Seleziona un tema",
+      "utm_content_asset_placeholder": "es. hero-01",
       "utm_apply": "Applica",
       "utm_clear": "Cancella",
       "utm_invalid_url": "Inserisci un URL valido per visualizzare l'anteprima e applicare i parametri UTM.",

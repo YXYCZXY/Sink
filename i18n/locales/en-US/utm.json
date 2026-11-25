@@ -1,0 +1,43 @@
+{
+  "utm": {
+    "sources": "Sources",
+    "new_source": "New source",
+    "filter_placeholder": "Quick filter...",
+    "fallback": "Default fallback",
+    "view_shortlinks": "View links",
+    "delete_source": "Delete source",
+    "medium": "Medium",
+    "campaign": "Campaign / Placement",
+    "term": "Term",
+    "content": "Content",
+    "category": "Category",
+    "theme": "Theme",
+    "add_medium": "Add medium",
+    "add_campaign": "Add campaign",
+    "add_term": "Add term",
+    "add_category": "Add category",
+    "add_theme": "Add theme",
+    "shortlinks_title": "Links for {source}",
+    "source_dialog_description": "Create a new UTM source, then configure its medium, campaign, and other branches.",
+    "option_dialog_description": "Add an option for the current source.",
+    "name": "Display name",
+    "token": "Token",
+    "token_hint": "Lowercase letters and numbers only, joined with - or _",
+    "create": "Create",
+    "add": "Add",
+    "empty_options": "No options yet",
+    "loading": "Loading UTM presets…",
+    "load_failed": "Failed to load UTM presets.",
+    "save_failed": "Failed to save changes. Please try again.",
+    "fallback_locked": "The default fallback source cannot be deleted",
+    "delete_option": "Delete {label}",
+    "delete_source_title": "Delete source {source}?",
+    "delete_source_description": "This also removes every branch configured for this source.",
+    "delete_source_action": "Delete source",
+    "validation": {
+      "required": "This field is required",
+      "token_format": "Lowercase letters and numbers only, joined with - or _",
+      "duplicate": "This token already exists"
+    }
+  }
+}

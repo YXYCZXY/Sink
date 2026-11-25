@@ -1,0 +1,43 @@
+{
+  "utm": {
+    "sources": "来源列表",
+    "new_source": "新建来源",
+    "filter_placeholder": "快速筛选...",
+    "fallback": "默认兜底",
+    "view_shortlinks": "查看短链",
+    "delete_source": "删除来源",
+    "medium": "媒介",
+    "campaign": "活动",
+    "term": "关键词",
+    "content": "内容分支",
+    "category": "类别",
+    "theme": "主题",
+    "add_medium": "添加媒介",
+    "add_campaign": "添加活动",
+    "add_term": "添加关键词",
+    "add_category": "添加类别",
+    "add_theme": "添加主题",
+    "shortlinks_title": "{source} 关联短链",
+    "source_dialog_description": "创建一个新的 UTM 来源，之后可为其配置媒介、活动等分支。",
+    "option_dialog_description": "为当前来源添加一个可选值。",
+    "name": "显示名称",
+    "token": "标识值",
+    "token_hint": "仅限小写字母和数字，可用 - 或 _ 连接",
+    "create": "创建",
+    "add": "添加",
+    "empty_options": "暂无可选项",
+    "loading": "正在加载 UTM 配置…",
+    "load_failed": "加载 UTM 配置失败。",
+    "save_failed": "保存失败，请重试。",
+    "fallback_locked": "默认兜底来源不可删除",
+    "delete_option": "删除 {label}",
+    "delete_source_title": "删除来源「{source}」？",
+    "delete_source_description": "将同时删除该来源下的全部分支配置。",
+    "delete_source_action": "删除来源",
+    "validation": {
+      "required": "必填项",
+      "token_format": "仅限小写字母和数字，可用 - 或 _ 连接",
+      "duplicate": "该标识值已存在"
+    }
+  }
+}

@@ -42,7 +42,11 @@
       "tag_label": "标签",
       "all_tags": "全部标签",
       "tags_loading": "正在加载标签…",
-      "tags_failed": "标签加载失败。"
+      "tags_failed": "标签加载失败。",
+      "utm_source_label": "UTM 来源",
+      "all_utm_sources": "全部来源",
+      "utm_sources_loading": "正在加载 UTM 来源…",
+      "utm_sources_failed": "UTM 来源加载失败。"
     },
     "stats": {
       "retry": "重试加载 {slug} 的统计数据",
@@ -117,6 +121,12 @@
       "utm_campaign": "UTM 活动",
       "utm_term": "UTM 关键词",
       "utm_content": "UTM 内容",
+      "utm_content_category": "类别",
+      "utm_content_theme": "主题",
+      "utm_content_asset": "素材 ID",
+      "utm_content_category_placeholder": "选择类别",
+      "utm_content_theme_placeholder": "选择主题",
+      "utm_content_asset_placeholder": "例如 hero-01",
       "utm_apply": "应用",
       "utm_clear": "清空",
       "utm_invalid_url": "请输入有效 URL 以预览并应用 UTM 参数。",

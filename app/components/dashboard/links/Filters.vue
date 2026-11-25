@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { LoaderCircle } from '@lucide/vue'
+import { useUtmCatalog } from '@/components/dashboard/utm/catalog'
 
 interface TagCount {
   name: string
@@ -7,7 +8,10 @@ interface TagCount {
 }
 
 const linksStore = useDashboardLinksStore()
+const catalog = useUtmCatalog()
 const allTagsValue = '__sink_all_tags__'
+const allUtmSourcesValue = '__sink_all_utm_sources__'
+const utmError = shallowRef(false)
 const tags = shallowRef<TagCount[]>([])
 const loading = shallowRef(false)
 const error = shallowRef(false)
@@ -41,7 +45,41 @@ function selectTag(value: unknown) {
   linksStore.tag = typeof value === 'string' && value !== allTagsValue ? value : undefined
 }
 
-onMounted(fetchTags)
+const selectableUtmSources = computed(() =>
+  catalog.sources.value.filter(source => source.value && !source.fallback),
+)
+
+const utmCatalogLoading = computed(() => !catalog.loaded.value)
+
+const selectedUtmSourceLabel = computed(() => {
+  if (!linksStore.utmSource)
+    return
+  return selectableUtmSources.value.find(source => source.value === linksStore.utmSource)?.label
+    ?? linksStore.utmSource
+})
+
+async function loadUtmCatalog() {
+  utmError.value = false
+  try {
+    await catalog.refresh()
+    const values = new Set(selectableUtmSources.value.map(source => source.value))
+    if (linksStore.utmSource && !values.has(linksStore.utmSource))
+      linksStore.utmSource = undefined
+  }
+  catch (cause) {
+    console.error(cause)
+    utmError.value = true
+  }
+}
+
+function selectUtmSource(value: unknown) {
+  linksStore.utmSource = typeof value === 'string' && value !== allUtmSourcesValue ? value : undefined
+}
+
+onMounted(() => {
+  void fetchTags()
+  void loadUtmCatalog()
+})
 linksStore.onLinkUpdate(() => void fetchTags())
 </script>
 
@@ -102,6 +140,44 @@ linksStore.onLinkUpdate(() => void fetchTags())
           </SelectItem>
         </SelectContent>
       </Select>
+      <Select
+        :model-value="linksStore.utmSource ?? allUtmSourcesValue"
+        :disabled="utmCatalogLoading"
+        @update:model-value="selectUtmSource"
+      >
+        <SelectTrigger
+          class="
+            min-w-0 flex-1
+            md:w-56 md:flex-none
+          "
+          :aria-label="$t('links.filters.utm_source_label')"
+        >
+          <SelectValue :placeholder="$t('links.filters.all_utm_sources')">
+            {{ selectedUtmSourceLabel }}
+          </SelectValue>
+          <LoaderCircle
+            v-if="utmCatalogLoading"
+            class="
+              size-4 shrink-0
+              motion-safe:animate-spin
+            "
+            aria-hidden="true"
+          />
+          <span v-if="utmCatalogLoading" class="sr-only">{{ $t('links.filters.utm_sources_loading') }}</span>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem :value="allUtmSourcesValue">
+            {{ $t('links.filters.all_utm_sources') }}
+          </SelectItem>
+          <SelectItem
+            v-for="source in selectableUtmSources"
+            :key="source.value"
+            :value="source.value"
+          >
+            <span class="truncate">{{ source.label }}</span>
+          </SelectItem>
+        </SelectContent>
+      </Select>
       <Button
         v-if="error"
         type="button"
@@ -115,6 +191,19 @@ linksStore.onLinkUpdate(() => void fetchTags())
       >
         {{ $t('common.try_again') }}
       </Button>
+      <Button
+        v-if="utmError"
+        type="button"
+        variant="ghost"
+        size="sm"
+        class="
+          w-full
+          md:w-auto
+        "
+        @click="loadUtmCatalog"
+      >
+        {{ $t('common.try_again') }}
+      </Button>
     </div>
     <p
       v-if="error"
@@ -125,6 +214,16 @@ linksStore.onLinkUpdate(() => void fetchTags())
       role="alert"
     >
       {{ $t('links.filters.tags_failed') }}
+    </p>
+    <p
+      v-if="utmError"
+      class="
+        text-xs text-destructive
+        sm:sr-only
+      "
+      role="alert"
+    >
+      {{ $t('links.filters.utm_sources_failed') }}
     </p>
   </section>
 </template>

@@ -3,7 +3,7 @@ const { t } = useI18n()
 
 const tabs = {
   location: ['country', 'region', 'city'],
-  referer: ['referer', 'slug'],
+  referer: ['referer', 'slug', 'utmSource'],
   time: ['language', 'timezone'],
   device: ['device', 'deviceType'],
   browser: ['os', 'browser', 'browserType'],

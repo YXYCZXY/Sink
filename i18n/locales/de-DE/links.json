@@ -42,7 +42,11 @@
       "tag_label": "Tag",
       "all_tags": "Alle Tags",
       "tags_loading": "Tags werden geladen…",
-      "tags_failed": "Tags konnten nicht geladen werden."
+      "tags_failed": "Tags konnten nicht geladen werden.",
+      "utm_source_label": "UTM-Quelle",
+      "all_utm_sources": "Alle Quellen",
+      "utm_sources_loading": "UTM-Quellen werden geladen…",
+      "utm_sources_failed": "UTM-Quellen konnten nicht geladen werden."
     },
     "stats": {
       "retry": "Statistik für {slug} erneut laden",
@@ -117,6 +121,12 @@
       "utm_campaign": "UTM-Kampagne",
       "utm_term": "UTM-Begriff",
       "utm_content": "UTM-Inhalt",
+      "utm_content_category": "Kategorie",
+      "utm_content_theme": "Thema",
+      "utm_content_asset": "Asset-ID",
+      "utm_content_category_placeholder": "Kategorie wählen",
+      "utm_content_theme_placeholder": "Thema wählen",
+      "utm_content_asset_placeholder": "z. B. hero-01",
       "utm_apply": "Anwenden",
       "utm_clear": "Löschen",
       "utm_invalid_url": "Gib eine gültige URL ein, um UTM-Parameter in der Vorschau zu sehen und anzuwenden.",

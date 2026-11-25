@@ -1,0 +1,43 @@
+{
+  "utm": {
+    "sources": "Danh sách nguồn",
+    "new_source": "Nguồn mới",
+    "filter_placeholder": "Lọc nhanh...",
+    "fallback": "Mặc định",
+    "view_shortlinks": "Xem liên kết",
+    "delete_source": "Xóa nguồn",
+    "medium": "Phương tiện",
+    "campaign": "Chiến dịch / Vị trí",
+    "term": "Từ khóa",
+    "content": "Nội dung",
+    "category": "Danh mục",
+    "theme": "Chủ đề",
+    "add_medium": "Thêm phương tiện",
+    "add_campaign": "Thêm chiến dịch",
+    "add_term": "Thêm từ khóa",
+    "add_category": "Thêm danh mục",
+    "add_theme": "Thêm chủ đề",
+    "shortlinks_title": "Liên kết liên quan đến {source}",
+    "source_dialog_description": "Tạo nguồn UTM mới, sau đó cấu hình các nhánh (phương tiện, chiến dịch...).",
+    "option_dialog_description": "Thêm một tùy chọn cho nguồn hiện tại.",
+    "name": "Tên hiển thị",
+    "token": "Giá trị định danh",
+    "token_hint": "Chỉ gồm chữ thường và số, nối bằng - hoặc _",
+    "create": "Tạo",
+    "add": "Thêm",
+    "empty_options": "Chưa có tùy chọn nào",
+    "loading": "Đang tải cấu hình UTM…",
+    "load_failed": "Không thể tải cấu hình UTM.",
+    "save_failed": "Lưu thất bại. Vui lòng thử lại.",
+    "fallback_locked": "Không thể xóa nguồn mặc định",
+    "delete_option": "Xóa {label}",
+    "delete_source_title": "Xóa nguồn {source}?",
+    "delete_source_description": "Tất cả các nhánh đã cấu hình của nguồn này cũng sẽ bị xóa.",
+    "delete_source_action": "Xóa nguồn",
+    "validation": {
+      "required": "Trường bắt buộc",
+      "token_format": "Chỉ gồm chữ thường và số, nối bằng - hoặc _",
+      "duplicate": "Giá trị định danh này đã tồn tại"
+    }
+  }
+}

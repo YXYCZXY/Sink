@@ -1,0 +1,76 @@
+CREATE TABLE `utm_options` (
+	`source_value` text NOT NULL,
+	`branch` text NOT NULL,
+	`value` text NOT NULL,
+	`label` text NOT NULL,
+	`position` integer DEFAULT 0 NOT NULL,
+	PRIMARY KEY(`source_value`, `branch`, `value`),
+	FOREIGN KEY (`source_value`) REFERENCES `utm_sources`(`value`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
+CREATE INDEX `utm_options_source_value_branch_idx` ON `utm_options` (`source_value`,`branch`);--> statement-breakpoint
+CREATE TABLE `utm_sources` (
+	`value` text PRIMARY KEY NOT NULL,
+	`label` text NOT NULL,
+	`fallback` integer DEFAULT false NOT NULL,
+	`position` integer DEFAULT 0 NOT NULL
+);
+--> statement-breakpoint
+INSERT INTO `utm_sources` (`value`, `label`, `fallback`, `position`) VALUES
+	('', '', true, 0),
+	('youtube', 'YouTube', false, 1),
+	('blog', 'Blog', false, 2);
+--> statement-breakpoint
+INSERT INTO `utm_options` (`source_value`, `branch`, `value`, `label`, `position`) VALUES
+	('', 'medium', 'cpc', '点击付费', 0),
+	('', 'medium', 'email', '邮件', 1),
+	('', 'medium', 'social', '社交', 2),
+	('', 'medium', 'organic', '自然流量', 3),
+	('', 'medium', 'referral', '引荐', 4),
+	('', 'campaign', 'launch', '发布', 0),
+	('', 'campaign', 'promo', '推广', 1),
+	('', 'term', 'brand', '品牌', 0),
+	('', 'term', 'product', '产品', 1),
+	('', 'categories', 'text', '文字', 0),
+	('', 'categories', 'image', '图片', 1),
+	('', 'categories', 'video', '视频', 2),
+	('', 'categories', 'banner', '横幅', 3),
+	('', 'themes', 'brand', '品牌', 0),
+	('', 'themes', 'product', '产品', 1),
+	('', 'themes', 'promo', '促销', 2),
+	('', 'themes', 'education', '科普', 3),
+	('youtube', 'medium', 'video', '视频', 0),
+	('youtube', 'medium', 'social', '社交', 1),
+	('youtube', 'medium', 'paid', '付费', 2),
+	('youtube', 'campaign', 'channel', '频道', 0),
+	('youtube', 'campaign', 'video', '视频', 1),
+	('youtube', 'campaign', 'shorts', 'Shorts', 2),
+	('youtube', 'campaign', 'live', '直播', 3),
+	('youtube', 'term', 'product_demo', '产品演示', 0),
+	('youtube', 'term', 'tutorial', '教程', 1),
+	('youtube', 'term', 'review', '评测', 2),
+	('youtube', 'categories', 'video', '视频', 0),
+	('youtube', 'categories', 'shorts', 'Shorts', 1),
+	('youtube', 'categories', 'live', '直播', 2),
+	('youtube', 'categories', 'community', '社区', 3),
+	('youtube', 'themes', 'product', '产品', 0),
+	('youtube', 'themes', 'tutorial', '教程', 1),
+	('youtube', 'themes', 'review', '评测', 2),
+	('youtube', 'themes', 'story', '故事', 3),
+	('blog', 'medium', 'article', '文章', 0),
+	('blog', 'medium', 'referral', '引荐', 1),
+	('blog', 'medium', 'organic', '自然流量', 2),
+	('blog', 'campaign', 'post', '单篇', 0),
+	('blog', 'campaign', 'series', '系列', 1),
+	('blog', 'campaign', 'guest', '客座', 2),
+	('blog', 'term', 'topic', '主题', 0),
+	('blog', 'term', 'author', '作者', 1),
+	('blog', 'term', 'category', '分类', 2),
+	('blog', 'categories', 'article', '文章', 0),
+	('blog', 'categories', 'image', '配图', 1),
+	('blog', 'categories', 'newsletter', '通讯', 2),
+	('blog', 'categories', 'cta', '行动号召', 3),
+	('blog', 'themes', 'guide', '指南', 0),
+	('blog', 'themes', 'news', '资讯', 1),
+	('blog', 'themes', 'case', '案例', 2),
+	('blog', 'themes', 'opinion', '观点', 3);

@@ -629,6 +629,48 @@ describe('d1 link integration', () => {
     expect((await fetchWithAuth(`/api/link/list?limit=1&sort=za&cursor=${encodeURIComponent(firstPage.cursor)}`)).status).toBe(400)
   })
 
+  it('filters list and count by utm_source query parameter boundaries', async () => {
+    const tag = `utm-${crypto.randomUUID().slice(0, 8)}`
+    const matched = [
+      makeLink(undefined, { url: `https://example.com/a?utm_source=youtube&utm_medium=video`, tags: [tag], createdAt: 30, updatedAt: 30 }),
+      makeLink(undefined, { url: `https://example.com/b?foo=1&utm_source=youtube`, tags: [tag], createdAt: 20, updatedAt: 20 }),
+      makeLink(undefined, { url: `https://example.com/c?utm_source=youtube#section`, tags: [tag], createdAt: 10, updatedAt: 10 }),
+    ]
+    const unmatched = [
+      makeLink(undefined, { url: `https://example.com/d?utm_source=twitter`, tags: [tag] }),
+      makeLink(undefined, { url: `https://example.com/e?xutm_source=youtube`, tags: [tag] }),
+      makeLink(undefined, { url: `https://example.com/f?utm_source=youtubeextra`, tags: [tag] }),
+      makeLink(undefined, { url: `https://example.com/g`, tags: [tag] }),
+    ]
+    for (const link of [...matched, ...unmatched])
+      expect((await postJson('/api/link/create', link)).status).toBe(201)
+
+    const list = await fetchWithAuth(`/api/link/list?status=all&tag=${tag}&utm_source=youtube&sort=newest`)
+    expect(list.status).toBe(200)
+    const listed = await list.json() as { links: Link[], list_complete: boolean, cursor?: string }
+    expect(listed.links.map(link => link.slug)).toEqual(matched.map(link => link.slug))
+    expect(listed.list_complete).toBe(true)
+
+    const counted = await fetchWithAuth(`/api/link/count?status=all&tag=${tag}&utm_source=youtube`)
+    expect(counted.status).toBe(200)
+    expect(await counted.json()).toEqual({ count: matched.length })
+
+    const first = await fetchWithAuth(`/api/link/list?limit=1&status=all&tag=${tag}&utm_source=youtube&sort=newest`)
+    const firstPage = await first.json() as { links: Link[], cursor: string, list_complete: boolean }
+    expect(firstPage.links).toHaveLength(1)
+    expect(firstPage.list_complete).toBe(false)
+    expect((await fetchWithAuth(
+      `/api/link/list?limit=1&status=all&tag=${tag}&utm_source=twitter&sort=newest&cursor=${encodeURIComponent(firstPage.cursor)}`,
+    )).status).toBe(400)
+
+    const second = await fetchWithAuth(
+      `/api/link/list?limit=1&status=all&tag=${tag}&utm_source=youtube&sort=newest&cursor=${encodeURIComponent(firstPage.cursor)}`,
+    )
+    expect(second.status).toBe(200)
+    const secondPage = await second.json() as { links: Link[] }
+    expect(secondPage.links.map(link => link.slug)).toEqual([matched[1]!.slug])
+  })
+
   it('requires a non-empty keyword or exact URL search selector', async () => {
     const tag = `guard-${crypto.randomUUID().slice(0, 8)}`
     const link = makeLink(undefined, { tags: [tag] })

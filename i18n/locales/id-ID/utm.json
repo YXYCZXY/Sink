@@ -1,0 +1,43 @@
+{
+  "utm": {
+    "sources": "Daftar sumber",
+    "new_source": "Sumber baru",
+    "filter_placeholder": "Filter cepat...",
+    "fallback": "Bawaan",
+    "view_shortlinks": "Lihat tautan",
+    "delete_source": "Hapus sumber",
+    "medium": "Media",
+    "campaign": "Kampanye / Posisi",
+    "term": "Kata kunci",
+    "content": "Konten",
+    "category": "Kategori",
+    "theme": "Tema",
+    "add_medium": "Tambah media",
+    "add_campaign": "Tambah kampanye",
+    "add_term": "Tambah kata kunci",
+    "add_category": "Tambah kategori",
+    "add_theme": "Tambah tema",
+    "shortlinks_title": "Tautan terkait {source}",
+    "source_dialog_description": "Buat sumber UTM baru, lalu konfigurasikan cabangnya (media, kampanye, dll.).",
+    "option_dialog_description": "Tambahkan opsi untuk sumber saat ini.",
+    "name": "Nama tampilan",
+    "token": "Token",
+    "token_hint": "Hanya huruf kecil dan angka, digabung dengan - atau _",
+    "create": "Buat",
+    "add": "Tambah",
+    "empty_options": "Belum ada opsi",
+    "loading": "Memuat preset UTM…",
+    "load_failed": "Gagal memuat preset UTM.",
+    "save_failed": "Gagal menyimpan perubahan. Coba lagi.",
+    "fallback_locked": "Sumber bawaan tidak dapat dihapus",
+    "delete_option": "Hapus {label}",
+    "delete_source_title": "Hapus sumber {source}?",
+    "delete_source_description": "Semua cabang yang dikonfigurasi untuk sumber ini juga akan dihapus.",
+    "delete_source_action": "Hapus sumber",
+    "validation": {
+      "required": "Wajib diisi",
+      "token_format": "Hanya huruf kecil dan angka, digabung dengan - atau _",
+      "duplicate": "Token ini sudah ada"
+    }
+  }
+}

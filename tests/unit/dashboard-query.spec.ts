@@ -156,14 +156,25 @@ describe('links dashboard query', () => {
       status: 'active',
       sort: 'newest',
       tag: undefined,
+      utmSource: undefined,
     })
     expect(serializeLinksQuery({ status: 'active', sort: 'newest' })).toEqual({})
   })
 
   it('normalizes and serializes non-default values', () => {
     const state = parseLinksQuery({ status: 'expired', sort: 'az', tag: '  Product  ' })
-    expect(state).toEqual({ status: 'expired', sort: 'az', tag: 'product' })
+    expect(state).toEqual({ status: 'expired', sort: 'az', tag: 'product', utmSource: undefined })
     expect(serializeLinksQuery(state)).toEqual({ status: 'expired', sort: 'az', tag: 'product' })
+  })
+
+  it('normalizes utm_source tokens and drops invalid values', () => {
+    expect(parseLinksQuery({ utm_source: '  YouTube  ' })).toMatchObject({ utmSource: 'youtube' })
+    expect(parseLinksQuery({ utm_source: 'bad token' })).toMatchObject({ utmSource: undefined })
+    expect(serializeLinksQuery({
+      status: 'active',
+      sort: 'newest',
+      utmSource: 'twitter',
+    })).toEqual({ utm_source: 'twitter' })
   })
 })
 

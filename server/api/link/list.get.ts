@@ -34,6 +34,13 @@ defineRouteMeta({
         description: 'Exact normalized tag filter',
       },
       {
+        name: 'utm_source',
+        in: 'query',
+        required: false,
+        schema: { type: 'string' },
+        description: 'Exact utm_source query parameter in the destination URL',
+      },
+      {
         name: 'status',
         in: 'query',
         required: false,
@@ -45,9 +52,9 @@ defineRouteMeta({
 })
 
 export default eventHandler(async (event) => {
-  const { limit, cursor, sort, tag, status } = await getValidatedQuery(event, ListLinksQuerySchema.parse)
+  const { limit, cursor, sort, tag, utm_source, status } = await getValidatedQuery(event, ListLinksQuerySchema.parse)
 
-  const list = await listLinks(event, { limit, cursor, sort, tag, status })
+  const list = await listLinks(event, { limit, cursor, sort, tag, utm_source, status })
   return {
     ...list,
     links: sanitizeLinksPassword(list.links),

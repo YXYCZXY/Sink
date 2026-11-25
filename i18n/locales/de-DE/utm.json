@@ -1,0 +1,43 @@
+{
+  "utm": {
+    "sources": "Quellen",
+    "new_source": "Neue Quelle",
+    "filter_placeholder": "Schnellfilter...",
+    "fallback": "Standard-Fallback",
+    "view_shortlinks": "Links ansehen",
+    "delete_source": "Quelle löschen",
+    "medium": "Medium",
+    "campaign": "Kampagne / Platzierung",
+    "term": "Keyword",
+    "content": "Inhalt",
+    "category": "Kategorie",
+    "theme": "Thema",
+    "add_medium": "Medium hinzufügen",
+    "add_campaign": "Kampagne hinzufügen",
+    "add_term": "Keyword hinzufügen",
+    "add_category": "Kategorie hinzufügen",
+    "add_theme": "Thema hinzufügen",
+    "shortlinks_title": "Links für {source}",
+    "source_dialog_description": "Erstelle eine neue UTM-Quelle und konfiguriere anschließend ihre Zweige (Medium, Kampagne usw.).",
+    "option_dialog_description": "Füge eine Option für die aktuelle Quelle hinzu.",
+    "name": "Anzeigename",
+    "token": "Kennung",
+    "token_hint": "Nur Kleinbuchstaben und Zahlen, verbunden mit - oder _",
+    "create": "Erstellen",
+    "add": "Hinzufügen",
+    "empty_options": "Noch keine Optionen",
+    "loading": "UTM-Voreinstellungen werden geladen…",
+    "load_failed": "UTM-Voreinstellungen konnten nicht geladen werden.",
+    "save_failed": "Speichern fehlgeschlagen. Bitte erneut versuchen.",
+    "fallback_locked": "Die Standard-Fallback-Quelle kann nicht gelöscht werden",
+    "delete_option": "{label} löschen",
+    "delete_source_title": "Quelle {source} löschen?",
+    "delete_source_description": "Dabei werden auch alle für diese Quelle konfigurierten Zweige entfernt.",
+    "delete_source_action": "Quelle löschen",
+    "validation": {
+      "required": "Dieses Feld ist erforderlich",
+      "token_format": "Nur Kleinbuchstaben und Zahlen, verbunden mit - oder _",
+      "duplicate": "Diese Kennung existiert bereits"
+    }
+  }
+}

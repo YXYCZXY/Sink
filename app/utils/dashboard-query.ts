@@ -52,6 +52,16 @@ export interface LinksQueryState {
   status: DashboardLinkStatusQuery
   sort: DashboardLinkSort
   tag?: string
+  utmSource?: string
+}
+
+const UTM_TOKEN_PATTERN = /^[a-z0-9]+(?:[_-][a-z0-9]+)*$/
+
+function parseUtmSourceFilter(value: DashboardQueryValue): string | undefined {
+  const raw = firstQueryValue(value)?.trim().toLowerCase()
+  if (!raw || raw.length > 64 || !UTM_TOKEN_PATTERN.test(raw))
+    return undefined
+  return raw
 }
 
 export interface DashboardSlugFilters {
@@ -180,6 +190,7 @@ export function parseLinksQuery(query: DashboardQuery): LinksQueryState {
     status: enumValue(query.status, LINK_STATUSES) ?? DEFAULT_LINK_STATUS,
     sort: enumValue(query.sort, LINK_SORTS) ?? DEFAULT_LINK_SORT,
     tag: tag && tag.length <= 32 ? tag : undefined,
+    utmSource: parseUtmSourceFilter(query.utm_source),
   }
 }
 
@@ -191,6 +202,8 @@ export function serializeLinksQuery(state: LinksQueryState): DashboardQueryOutpu
     query.sort = state.sort
   if (state.tag)
     query.tag = state.tag
+  if (state.utmSource)
+    query.utm_source = state.utmSource
   return query
 }
 

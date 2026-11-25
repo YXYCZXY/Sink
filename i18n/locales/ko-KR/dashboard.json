@@ -64,6 +64,7 @@
       "city": "도시",
       "referer": "참조자",
       "slug": "슬러그",
+      "utmSource": "플랫폼",
       "language": "언어",
       "timezone": "시간대",
       "device": "기기",

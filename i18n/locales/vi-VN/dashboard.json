@@ -64,6 +64,7 @@
       "city": "Thành phố",
       "referer": "Nguồn giới thiệu",
       "slug": "Slug",
+      "utmSource": "Nền tảng",
       "language": "Ngôn ngữ",
       "timezone": "Múi giờ",
       "device": "Thiết bị",

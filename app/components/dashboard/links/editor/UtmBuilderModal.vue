@@ -32,7 +32,7 @@ function applyBuilder(url: string) {
     v-model:open="open"
     :title="$t('links.form.utm_builder')"
     :description="$t('links.form.utm_description')"
-    content-class="md:max-w-xl"
+    content-class="sm:max-w-2xl md:max-w-2xl"
     nested-drawer
   >
     <DashboardLinksEditorUtmBuilderForm

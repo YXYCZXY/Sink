@@ -64,6 +64,7 @@
       "city": "Ville",
       "referer": "Referrer",
       "slug": "Slug",
+      "utmSource": "Plateforme",
       "language": "Langue",
       "timezone": "Fuseau horaire",
       "device": "Appareil",

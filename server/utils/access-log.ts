@@ -13,6 +13,7 @@ import {
 } from 'ua-parser-js/extensions'
 import { parseURL } from 'ufo'
 import { getFlag } from '#shared/utils/flag'
+import { utmSourceFromLinkUrl } from '#shared/utils/utm-source'
 
 function toBlobNumber(blob: string) {
   return +blob.replace(/\D/g, '')
@@ -35,6 +36,7 @@ export const blobsMap = {
   blob14: 'device',
   blob15: 'deviceType',
   blob16: 'COLO',
+  blob17: 'utmSource',
 } as const
 
 export const doublesMap = {
@@ -166,6 +168,7 @@ export function collectAccessLog(event: H3Event): AccessLogResult | undefined {
     device: uaInfo?.device?.model,
     deviceType: uaInfo?.device?.type,
     COLO: cf?.colo,
+    utmSource: utmSourceFromLinkUrl(link.url || '') || '',
 
     // For RealTime Globe
     latitude: Number(cf?.latitude || getHeader(event, 'cf-iplatitude') || 0),

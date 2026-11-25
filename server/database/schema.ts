@@ -42,6 +42,24 @@ export const linkTags = sqliteTable('link_tags', {
   index('link_tags_tag_name_link_slug_idx').on(table.tagName, table.linkSlug),
 ])
 
+export const utmSources = sqliteTable('utm_sources', {
+  value: text().primaryKey(),
+  label: text().notNull(),
+  fallback: integer({ mode: 'boolean' }).notNull().default(false),
+  position: integer().notNull().default(0),
+})
+
+export const utmOptions = sqliteTable('utm_options', {
+  sourceValue: text('source_value').notNull().references(() => utmSources.value, { onDelete: 'cascade' }),
+  branch: text({ enum: ['medium', 'campaign', 'term', 'categories', 'themes'] }).notNull(),
+  value: text().notNull(),
+  label: text().notNull(),
+  position: integer().notNull().default(0),
+}, table => [
+  primaryKey({ columns: [table.sourceValue, table.branch, table.value] }),
+  index('utm_options_source_value_branch_idx').on(table.sourceValue, table.branch),
+])
+
 export const linkTombstones = sqliteTable('link_tombstones', {
   slug: text().primaryKey(),
   deletedAt: integer('deleted_at').notNull(),

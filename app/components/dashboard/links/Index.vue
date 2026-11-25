@@ -41,6 +41,7 @@ async function getLinks() {
         sort: linksStore.sortBy,
         status: linksStore.status,
         tag: linksStore.tag,
+        ...(linksStore.utmSource ? { utm_source: linksStore.utmSource } : {}),
       },
     })
 
@@ -93,7 +94,7 @@ useInfiniteScroll(
 )
 
 watch(
-  [() => linksStore.sortBy, () => linksStore.status, () => linksStore.tag],
+  [() => linksStore.sortBy, () => linksStore.status, () => linksStore.tag, () => linksStore.utmSource],
   resetAndLoad,
 )
 
@@ -101,6 +102,7 @@ function matchesCurrentFilters(link: DashboardLink) {
   const isExpired = Boolean(link.expiration && link.expiration <= Math.floor(Date.now() / 1000))
   return (linksStore.status === 'expired') === isExpired
     && (!linksStore.tag || link.tags?.includes(linksStore.tag))
+    && linkMatchesUtmSource(link.url, linksStore.utmSource)
 }
 
 function updateLinkList(link: DashboardLink, type: LinkUpdateType) {

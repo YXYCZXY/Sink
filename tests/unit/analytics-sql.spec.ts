@@ -22,6 +22,7 @@ vi.mock('../../server/utils/access-log', () => ({
     blob14: 'device',
     blob15: 'deviceType',
     blob16: 'COLO',
+    blob17: 'utmSource',
   },
 }))
 

@@ -82,7 +82,7 @@ function hiddenTagCount(link: DashboardLinkSearchItem) {
   return Math.max(0, (link.tags?.length ?? 0) - 3)
 }
 
-watch([searchTerm, () => linksStore.status, () => linksStore.tag], ([query]) => {
+watch([searchTerm, () => linksStore.status, () => linksStore.tag, () => linksStore.utmSource], ([query]) => {
   linksSearchStore.invalidateSearch(query)
   if (!isOpen.value || !query.trim())
     return

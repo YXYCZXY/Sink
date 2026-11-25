@@ -17,6 +17,12 @@ const platformItems = computed<NavItem[]>(() => [
     isActive: isActive('links'),
   },
   {
+    title: 'nav.utm',
+    url: '/dashboard/utm',
+    icon: DASHBOARD_ROUTES.utm.icon,
+    isActive: isActive('utm'),
+  },
+  {
     title: 'nav.analysis',
     url: '/dashboard/analysis',
     icon: DASHBOARD_ROUTES.analysis.icon,

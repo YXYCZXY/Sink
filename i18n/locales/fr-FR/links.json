@@ -42,7 +42,11 @@
       "tag_label": "Tag",
       "all_tags": "Tous les tags",
       "tags_loading": "Chargement des tags…",
-      "tags_failed": "Échec du chargement des tags."
+      "tags_failed": "Échec du chargement des tags.",
+      "utm_source_label": "Source UTM",
+      "all_utm_sources": "Toutes les sources",
+      "utm_sources_loading": "Chargement des sources UTM…",
+      "utm_sources_failed": "Échec du chargement des sources UTM."
     },
     "stats": {
       "retry": "Réessayer les statistiques de {slug}",
@@ -117,6 +121,12 @@
       "utm_campaign": "Campagne UTM",
       "utm_term": "Terme UTM",
       "utm_content": "Contenu UTM",
+      "utm_content_category": "Catégorie",
+      "utm_content_theme": "Thème",
+      "utm_content_asset": "ID du support",
+      "utm_content_category_placeholder": "Choisir une catégorie",
+      "utm_content_theme_placeholder": "Choisir un thème",
+      "utm_content_asset_placeholder": "ex. hero-01",
       "utm_apply": "Appliquer",
       "utm_clear": "Effacer",
       "utm_invalid_url": "Saisissez une URL valide pour prévisualiser et appliquer les paramètres UTM.",

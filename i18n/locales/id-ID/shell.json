@@ -26,6 +26,7 @@
   },
   "nav": {
     "links": "Tautan",
+    "utm": "UTM",
     "analysis": "Analisis",
     "realtime": "Real-time",
     "check": "Check",

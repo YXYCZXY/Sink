@@ -42,7 +42,11 @@
       "tag_label": "Thẻ",
       "all_tags": "Tất cả thẻ",
       "tags_loading": "Đang tải thẻ…",
-      "tags_failed": "Không thể tải thẻ."
+      "tags_failed": "Không thể tải thẻ.",
+      "utm_source_label": "Nguồn UTM",
+      "all_utm_sources": "Tất cả nguồn",
+      "utm_sources_loading": "Đang tải nguồn UTM…",
+      "utm_sources_failed": "Không thể tải nguồn UTM."
     },
     "stats": {
       "retry": "Thử lại số liệu của {slug}",
@@ -117,6 +121,12 @@
       "utm_campaign": "Chiến dịch UTM",
       "utm_term": "Từ khóa UTM",
       "utm_content": "Nội dung UTM",
+      "utm_content_category": "Danh mục",
+      "utm_content_theme": "Chủ đề",
+      "utm_content_asset": "ID tài nguyên",
+      "utm_content_category_placeholder": "Chọn danh mục",
+      "utm_content_theme_placeholder": "Chọn chủ đề",
+      "utm_content_asset_placeholder": "vd. hero-01",
       "utm_apply": "Áp dụng",
       "utm_clear": "Xóa",
       "utm_invalid_url": "Nhập URL hợp lệ để xem trước và áp dụng tham số UTM.",

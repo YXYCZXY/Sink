@@ -42,7 +42,11 @@
       "tag_label": "태그",
       "all_tags": "모든 태그",
       "tags_loading": "태그 불러오는 중…",
-      "tags_failed": "태그를 불러오지 못했습니다."
+      "tags_failed": "태그를 불러오지 못했습니다.",
+      "utm_source_label": "UTM 소스",
+      "all_utm_sources": "모든 소스",
+      "utm_sources_loading": "UTM 소스를 불러오는 중…",
+      "utm_sources_failed": "UTM 소스를 불러오지 못했습니다."
     },
     "stats": {
       "retry": "{slug} 통계 다시 불러오기",
@@ -117,6 +121,12 @@
       "utm_campaign": "UTM 캠페인",
       "utm_term": "UTM 검색어",
       "utm_content": "UTM 콘텐츠",
+      "utm_content_category": "분류",
+      "utm_content_theme": "주제",
+      "utm_content_asset": "소재 ID",
+      "utm_content_category_placeholder": "분류 선택",
+      "utm_content_theme_placeholder": "주제 선택",
+      "utm_content_asset_placeholder": "예: hero-01",
       "utm_apply": "적용",
       "utm_clear": "지우기",
       "utm_invalid_url": "UTM 매개변수를 미리보고 적용하려면 유효한 URL을 입력하세요.",

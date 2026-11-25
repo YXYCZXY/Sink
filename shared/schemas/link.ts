@@ -1,6 +1,7 @@
 import { customAlphabet } from 'nanoid'
 import { z } from 'zod'
 import { LINK_PASSWORD_MASK_PREFIX } from '../utils/link-password'
+import { UtmTokenSchema } from './utm'
 
 const { slugRegex, reserveSlug } = useAppConfig()
 
@@ -132,6 +133,7 @@ export const LinkFilterQuerySchema = z.object({
   q: LinkKeywordSchema.optional(),
   url: z.string().trim().url().max(MAX_URL_LENGTH).optional().describe('Target URL matched exactly.'),
   tag: LinkTagFilterSchema.optional(),
+  utm_source: UtmTokenSchema.optional().describe('Exact utm_source query parameter in the destination URL.'),
   status: LinkStatusFilterSchema,
 })
 
@@ -149,6 +151,7 @@ export const ListLinksQuerySchema = z.object({
   cursor: z.string().trim().max(1024).optional().describe('Pagination cursor returned by a previous call.'),
   sort: z.enum(['az', 'za', 'newest', 'oldest']).default('newest'),
   tag: LinkTagFilterSchema.optional(),
+  utm_source: UtmTokenSchema.optional().describe('Exact utm_source query parameter in the destination URL.'),
   status: LinkStatusFilterSchema,
 })
 

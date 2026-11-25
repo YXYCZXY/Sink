@@ -3,13 +3,17 @@ import { useMediaQuery } from '@vueuse/core'
 import { parseQuery, parseURL, withQuery } from 'ufo'
 import { toast } from 'vue-sonner'
 import { UrlSchema } from '#shared/schemas/link'
+import { useUtmCatalog } from '@/components/dashboard/utm/catalog'
+import { composeUtmContent, parseUtmContent } from './utm-presets'
 
 interface UtmFormValues {
   source: string
   medium: string
   campaign: string
   term: string
-  content: string
+  contentCategory: string
+  contentTheme: string
+  contentAssetId: string
 }
 
 const props = defineProps<{
@@ -24,7 +28,13 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 const isDesktop = useMediaQuery('(min-width: 640px)')
+const catalog = useUtmCatalog()
 const utmValues = reactive<UtmFormValues>(createEmptyUtmValues())
+
+onMounted(() => {
+  if (!catalog.loaded.value)
+    catalog.refresh().catch(() => {})
+})
 
 const validatedUrl = computed(() => {
   const result = UrlSchema.safeParse(props.url)
@@ -46,6 +56,14 @@ const validatedPreviewUrl = computed(() => {
   return result.success ? result.data : undefined
 })
 
+const sourceOptions = computed(() =>
+  catalog.sources.value
+    .filter(source => !source.fallback)
+    .map(source => ({ value: source.value, label: source.label })),
+)
+
+const fieldPresets = computed(() => catalog.fieldPresets(utmValues.source))
+
 const canApply = computed(() => Boolean(validatedUrl.value && validatedPreviewUrl.value))
 
 watch(canApply, value => emit('update:canApply', value), { immediate: true })
@@ -58,7 +76,9 @@ function createEmptyUtmValues(): UtmFormValues {
     medium: '',
     campaign: '',
     term: '',
-    content: '',
+    contentCategory: '',
+    contentTheme: '',
+    contentAssetId: '',
   }
 }
 
@@ -77,7 +97,11 @@ function buildUtmQuery(values: UtmFormValues) {
     utm_medium: normalizeUtmValue(values.medium),
     utm_campaign: normalizeUtmValue(values.campaign),
     utm_term: normalizeUtmValue(values.term),
-    utm_content: normalizeUtmValue(values.content),
+    utm_content: normalizeUtmValue(composeUtmContent({
+      category: values.contentCategory,
+      theme: values.contentTheme,
+      assetId: values.contentAssetId,
+    })),
   }
 }
 
@@ -95,11 +119,28 @@ function syncUtmValues(url: string) {
   utmValues.medium = getQueryValue(query.utm_medium)
   utmValues.campaign = getQueryValue(query.utm_campaign)
   utmValues.term = getQueryValue(query.utm_term)
-  utmValues.content = getQueryValue(query.utm_content)
+
+  const content = parseUtmContent(
+    getQueryValue(query.utm_content),
+    catalog.fieldPresets(utmValues.source).content,
+  )
+  utmValues.contentCategory = content.category
+  utmValues.contentTheme = content.theme
+  utmValues.contentAssetId = content.assetId
 }
 
 function clearUtmValues() {
   Object.assign(utmValues, createEmptyUtmValues())
+}
+
+function onSourceChange(value: string) {
+  utmValues.source = value
+  utmValues.medium = ''
+  utmValues.campaign = ''
+  utmValues.term = ''
+  utmValues.contentCategory = ''
+  utmValues.contentTheme = ''
+  utmValues.contentAssetId = ''
 }
 
 function submitForm() {
@@ -131,13 +172,14 @@ function submitForm() {
             <FieldLabel :for="`${formId}-utm-source`">
               {{ $t('links.form.utm_source') }}
             </FieldLabel>
-            <Input
+            <DashboardLinksEditorUtmCombobox
               :id="`${formId}-utm-source`"
-              v-model="utmValues.source"
+              :model-value="utmValues.source"
               name="utm_source"
+              :options="sourceOptions"
               :autofocus="isDesktop"
-              placeholder="newsletter"
-              autocomplete="off"
+              placeholder="youtube"
+              @update:model-value="onSourceChange"
             />
           </Field>
 
@@ -145,12 +187,12 @@ function submitForm() {
             <FieldLabel :for="`${formId}-utm-medium`">
               {{ $t('links.form.utm_medium') }}
             </FieldLabel>
-            <Input
+            <DashboardLinksEditorUtmCombobox
               :id="`${formId}-utm-medium`"
               v-model="utmValues.medium"
               name="utm_medium"
-              placeholder="email"
-              autocomplete="off"
+              :options="fieldPresets.medium"
+              placeholder="video"
             />
           </Field>
         </div>
@@ -159,47 +201,36 @@ function submitForm() {
           <FieldLabel :for="`${formId}-utm-campaign`">
             {{ $t('links.form.utm_campaign') }}
           </FieldLabel>
-          <Input
+          <DashboardLinksEditorUtmCombobox
             :id="`${formId}-utm-campaign`"
             v-model="utmValues.campaign"
             name="utm_campaign"
-            placeholder="spring_sale"
-            autocomplete="off"
+            :options="fieldPresets.campaign"
+            placeholder="channel"
           />
         </Field>
 
-        <div
-          class="
-            grid gap-4
-            md:grid-cols-2
-          "
-        >
-          <Field>
-            <FieldLabel :for="`${formId}-utm-term`">
-              {{ $t('links.form.utm_term') }}
-            </FieldLabel>
-            <Input
-              :id="`${formId}-utm-term`"
-              v-model="utmValues.term"
-              name="utm_term"
-              placeholder="running-shoes"
-              autocomplete="off"
-            />
-          </Field>
+        <Field>
+          <FieldLabel :for="`${formId}-utm-term`">
+            {{ $t('links.form.utm_term') }}
+          </FieldLabel>
+          <DashboardLinksEditorUtmCombobox
+            :id="`${formId}-utm-term`"
+            v-model="utmValues.term"
+            name="utm_term"
+            :options="fieldPresets.term"
+            placeholder="tutorial"
+          />
+        </Field>
 
-          <Field>
-            <FieldLabel :for="`${formId}-utm-content`">
-              {{ $t('links.form.utm_content') }}
-            </FieldLabel>
-            <Input
-              :id="`${formId}-utm-content`"
-              v-model="utmValues.content"
-              name="utm_content"
-              placeholder="hero_button"
-              autocomplete="off"
-            />
-          </Field>
-        </div>
+        <DashboardLinksEditorUtmContentField
+          v-model:category="utmValues.contentCategory"
+          v-model:theme="utmValues.contentTheme"
+          v-model:asset-id="utmValues.contentAssetId"
+          :form-id="formId"
+          :categories="fieldPresets.content.categories"
+          :themes="fieldPresets.content.themes"
+        />
 
         <Field>
           <div class="space-y-2">

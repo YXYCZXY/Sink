@@ -10,6 +10,7 @@ export const FilterQuerySchema = z.object({
   url: z.string().optional(),
   slug: z.string().optional(),
   referer: z.string().optional(),
+  utmSource: z.string().optional(),
   country: z.string().optional(),
   region: z.string().optional(),
   city: z.string().optional(),

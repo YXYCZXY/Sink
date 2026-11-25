@@ -23,6 +23,7 @@ export interface ListLinksOptions {
   cursor?: string
   sort?: LinkSortBy
   tag?: string
+  utm_source?: string
   status?: LinkStatus
   backfillExpiration?: boolean
 }
@@ -37,6 +38,7 @@ export interface LinkFilterOptions {
   q?: string
   url?: string
   tag?: string
+  utm_source?: string
   status?: LinkStatus
 }
 
@@ -49,6 +51,7 @@ interface D1Cursor {
   slug: string
   createdAt?: number
   tag?: string
+  utm_source?: string
   status: LinkStatus
 }
 
@@ -80,6 +83,27 @@ function exactTagCondition(db: ReturnType<typeof getDatabase>, tag: string | und
         eq(linkTags.tagName, tag),
       )))
     : undefined
+}
+
+function escapeLikePattern(value: string) {
+  return value.replace(/[!%_]/g, '!$&')
+}
+
+/** Match utm_source=<value> as a query param boundary (?|& … &|#|end), case-insensitive name. */
+function utmSourceCondition(utmSource: string | undefined) {
+  if (!utmSource)
+    return undefined
+
+  const value = escapeLikePattern(utmSource.toLowerCase())
+  const patterns = [
+    `%?utm_source=${value}&%`,
+    `%?utm_source=${value}#%`,
+    `%?utm_source=${value}`,
+    `%&utm_source=${value}&%`,
+    `%&utm_source=${value}#%`,
+    `%&utm_source=${value}`,
+  ]
+  return or(...patterns.map(pattern => sql`lower(${links.url}) like ${pattern} escape '!'`))
 }
 
 function rowToLink(row: LinkRow): Link {
@@ -310,15 +334,28 @@ function encodeCursor(cursor: D1Cursor): string {
   return `${D1_CURSOR_PREFIX}${btoa(JSON.stringify(cursor))}`
 }
 
-function decodeCursor(cursor: string | undefined, sort: LinkSortBy, tag: string | undefined, status: LinkStatus): D1Cursor | undefined {
+function decodeCursor(
+  cursor: string | undefined,
+  sort: LinkSortBy,
+  tag: string | undefined,
+  utmSource: string | undefined,
+  status: LinkStatus,
+): D1Cursor | undefined {
   if (!cursor)
     return undefined
   if (!cursor.startsWith(D1_CURSOR_PREFIX))
     throw createError({ status: 400, statusText: 'Invalid pagination cursor' })
   try {
     const decoded = JSON.parse(atob(cursor.slice(D1_CURSOR_PREFIX.length))) as D1Cursor
-    if (decoded.sort !== sort || decoded.tag !== tag || decoded.status !== status || typeof decoded.slug !== 'string')
+    if (
+      decoded.sort !== sort
+      || decoded.tag !== tag
+      || decoded.utm_source !== utmSource
+      || decoded.status !== status
+      || typeof decoded.slug !== 'string'
+    ) {
       throw new Error('Cursor does not match sort')
+    }
     if ((sort === 'newest' || sort === 'oldest') && typeof decoded.createdAt !== 'number')
       throw new Error('Cursor is missing creation time')
     return decoded
@@ -332,7 +369,7 @@ export async function d1ListLinks(event: H3Event, options: ListLinksOptions): Pr
   const db = getDatabase(event)
   const sort = options.sort ?? 'newest'
   const status = options.status ?? 'active'
-  const cursor = decodeCursor(options.cursor, sort, options.tag, status)
+  const cursor = decodeCursor(options.cursor, sort, options.tag, options.utm_source, status)
   let cursorCondition
   let order
 
@@ -354,7 +391,8 @@ export async function d1ListLinks(event: H3Event, options: ListLinksOptions): Pr
   }
 
   const tagCondition = exactTagCondition(db, options.tag)
-  const rows = await db.select().from(links).where(and(statusCondition(status), tagCondition, cursorCondition)).orderBy(...order).limit(options.limit + 1)
+  const sourceCondition = utmSourceCondition(options.utm_source)
+  const rows = await db.select().from(links).where(and(statusCondition(status), tagCondition, sourceCondition, cursorCondition)).orderBy(...order).limit(options.limit + 1)
   const hasMore = rows.length > options.limit
   const page = hasMore ? rows.slice(0, options.limit) : rows
   if (options.backfillExpiration) {
@@ -365,7 +403,9 @@ export async function d1ListLinks(event: H3Event, options: ListLinksOptions): Pr
   return {
     links: await rowsToLinks(event, page),
     list_complete: !hasMore,
-    cursor: hasMore && last ? encodeCursor({ sort, slug: last.slug, createdAt: last.createdAt, tag: options.tag, status }) : undefined,
+    cursor: hasMore && last
+      ? encodeCursor({ sort, slug: last.slug, createdAt: last.createdAt, tag: options.tag, utm_source: options.utm_source, status })
+      : undefined,
   }
 }
 
@@ -404,10 +444,13 @@ function linkFilterCondition(db: ReturnType<typeof getDatabase>, options: LinkFi
   const conditions = [statusCondition(status)]
   if (options.tag)
     conditions.push(exactTagCondition(db, options.tag))
+  const sourceCondition = utmSourceCondition(options.utm_source)
+  if (sourceCondition)
+    conditions.push(sourceCondition)
   if (options.url)
     conditions.push(eq(links.normalizedUrl, withoutQuery(options.url)))
   if (options.q) {
-    const pattern = `%${options.q.toLowerCase().replace(/[!%_]/g, '!$&')}%`
+    const pattern = `%${escapeLikePattern(options.q.toLowerCase())}%`
     conditions.push(or(
       sql`lower(${links.slug}) like ${pattern} escape '!'`,
       sql`lower(${links.url}) like ${pattern} escape '!'`,

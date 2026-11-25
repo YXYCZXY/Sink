@@ -26,6 +26,7 @@
   },
   "nav": {
     "links": "Link",
+    "utm": "UTM",
     "analysis": "Analisi",
     "realtime": "In Tempo Reale",
     "check": "Check",

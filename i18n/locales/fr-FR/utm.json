@@ -1,0 +1,43 @@
+{
+  "utm": {
+    "sources": "Sources",
+    "new_source": "Nouvelle source",
+    "filter_placeholder": "Filtrer rapidement...",
+    "fallback": "Solution par défaut",
+    "view_shortlinks": "Voir les liens",
+    "delete_source": "Supprimer la source",
+    "medium": "Support",
+    "campaign": "Campagne / Emplacement",
+    "term": "Mot-clé",
+    "content": "Contenu",
+    "category": "Catégorie",
+    "theme": "Thème",
+    "add_medium": "Ajouter un support",
+    "add_campaign": "Ajouter une campagne",
+    "add_term": "Ajouter un mot-clé",
+    "add_category": "Ajouter une catégorie",
+    "add_theme": "Ajouter un thème",
+    "shortlinks_title": "Liens associés à {source}",
+    "source_dialog_description": "Créez une nouvelle source UTM, puis configurez ses branches (support, campagne, etc.).",
+    "option_dialog_description": "Ajoutez une option pour la source actuelle.",
+    "name": "Nom affiché",
+    "token": "Identifiant",
+    "token_hint": "Lettres minuscules et chiffres uniquement, reliés par - ou _",
+    "create": "Créer",
+    "add": "Ajouter",
+    "empty_options": "Aucune option pour le moment",
+    "loading": "Chargement des préréglages UTM…",
+    "load_failed": "Échec du chargement des préréglages UTM.",
+    "save_failed": "Échec de l'enregistrement. Veuillez réessayer.",
+    "fallback_locked": "La source par défaut ne peut pas être supprimée",
+    "delete_option": "Supprimer {label}",
+    "delete_source_title": "Supprimer la source {source} ?",
+    "delete_source_description": "Cela supprime aussi toutes les branches configurées pour cette source.",
+    "delete_source_action": "Supprimer la source",
+    "validation": {
+      "required": "Ce champ est obligatoire",
+      "token_format": "Lettres minuscules et chiffres uniquement, reliés par - ou _",
+      "duplicate": "Cet identifiant existe déjà"
+    }
+  }
+}

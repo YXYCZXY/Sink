@@ -1,0 +1,43 @@
+{
+  "utm": {
+    "sources": "Elenco sorgenti",
+    "new_source": "Nuova sorgente",
+    "filter_placeholder": "Filtro rapido...",
+    "fallback": "Predefinito",
+    "view_shortlinks": "Vedi link",
+    "delete_source": "Elimina sorgente",
+    "medium": "Mezzo",
+    "campaign": "Campagna / Posizione",
+    "term": "Parola chiave",
+    "content": "Contenuto",
+    "category": "Categoria",
+    "theme": "Tema",
+    "add_medium": "Aggiungi mezzo",
+    "add_campaign": "Aggiungi campagna",
+    "add_term": "Aggiungi parola chiave",
+    "add_category": "Aggiungi categoria",
+    "add_theme": "Aggiungi tema",
+    "shortlinks_title": "Link associati a {source}",
+    "source_dialog_description": "Crea una nuova sorgente UTM, poi configura i suoi rami (mezzo, campagna, ecc.).",
+    "option_dialog_description": "Aggiungi un'opzione per la sorgente corrente.",
+    "name": "Nome visualizzato",
+    "token": "Identificatore",
+    "token_hint": "Solo lettere minuscole e numeri, uniti con - o _",
+    "create": "Crea",
+    "add": "Aggiungi",
+    "empty_options": "Nessuna opzione",
+    "loading": "Caricamento dei preset UTM…",
+    "load_failed": "Impossibile caricare i preset UTM.",
+    "save_failed": "Salvataggio non riuscito. Riprova.",
+    "fallback_locked": "La sorgente predefinita non può essere eliminata",
+    "delete_option": "Elimina {label}",
+    "delete_source_title": "Eliminare la sorgente {source}?",
+    "delete_source_description": "Verranno eliminati anche tutti i rami configurati per questa sorgente.",
+    "delete_source_action": "Elimina sorgente",
+    "validation": {
+      "required": "Campo obbligatorio",
+      "token_format": "Solo lettere minuscole e numeri, uniti con - o _",
+      "duplicate": "Questo identificatore esiste già"
+    }
+  }
+}

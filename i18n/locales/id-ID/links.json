@@ -42,7 +42,11 @@
       "tag_label": "Tag",
       "all_tags": "Semua tag",
       "tags_loading": "Memuat tag…",
-      "tags_failed": "Gagal memuat tag."
+      "tags_failed": "Gagal memuat tag.",
+      "utm_source_label": "Sumber UTM",
+      "all_utm_sources": "Semua sumber",
+      "utm_sources_loading": "Memuat sumber UTM…",
+      "utm_sources_failed": "Gagal memuat sumber UTM."
     },
     "stats": {
       "retry": "Coba lagi statistik {slug}",
@@ -117,6 +121,12 @@
       "utm_campaign": "Kampanye UTM",
       "utm_term": "Istilah UTM",
       "utm_content": "Konten UTM",
+      "utm_content_category": "Kategori",
+      "utm_content_theme": "Tema",
+      "utm_content_asset": "ID materi",
+      "utm_content_category_placeholder": "Pilih kategori",
+      "utm_content_theme_placeholder": "Pilih tema",
+      "utm_content_asset_placeholder": "mis. hero-01",
       "utm_apply": "Terapkan",
       "utm_clear": "Bersihkan",
       "utm_invalid_url": "Masukkan URL valid untuk melihat pratinjau dan menerapkan parameter UTM.",

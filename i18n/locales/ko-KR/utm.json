@@ -1,0 +1,43 @@
+{
+  "utm": {
+    "sources": "소스 목록",
+    "new_source": "새 소스",
+    "filter_placeholder": "빠른 필터...",
+    "fallback": "기본 폴백",
+    "view_shortlinks": "단축 링크 보기",
+    "delete_source": "소스 삭제",
+    "medium": "매체",
+    "campaign": "캠페인 / 위치",
+    "term": "키워드",
+    "content": "콘텐츠",
+    "category": "카테고리",
+    "theme": "테마",
+    "add_medium": "매체 추가",
+    "add_campaign": "캠페인 추가",
+    "add_term": "키워드 추가",
+    "add_category": "카테고리 추가",
+    "add_theme": "테마 추가",
+    "shortlinks_title": "{source} 연관 단축 링크",
+    "source_dialog_description": "새 UTM 소스를 만든 뒤 매체, 캠페인 등의 브랜치를 구성하세요.",
+    "option_dialog_description": "현재 소스에 옵션을 추가합니다.",
+    "name": "표시 이름",
+    "token": "식별 값",
+    "token_hint": "소문자와 숫자만 사용할 수 있으며 - 또는 _로 연결합니다",
+    "create": "만들기",
+    "add": "추가",
+    "empty_options": "옵션이 없습니다",
+    "loading": "UTM 프리셋을 불러오는 중…",
+    "load_failed": "UTM 프리셋을 불러오지 못했습니다.",
+    "save_failed": "저장에 실패했습니다. 다시 시도하세요.",
+    "fallback_locked": "기본 폴백 소스는 삭제할 수 없습니다",
+    "delete_option": "{label} 삭제",
+    "delete_source_title": "소스 {source}을(를) 삭제하시겠습니까?",
+    "delete_source_description": "이 소스에 구성된 모든 브랜치도 함께 삭제됩니다.",
+    "delete_source_action": "소스 삭제",
+    "validation": {
+      "required": "필수 항목입니다",
+      "token_format": "소문자와 숫자만 사용할 수 있으며 - 또는 _로 연결합니다",
+      "duplicate": "이미 존재하는 식별 값입니다"
+    }
+  }
+}

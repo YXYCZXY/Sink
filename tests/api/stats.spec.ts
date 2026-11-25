@@ -22,7 +22,7 @@ describe('/api/stats/metrics', () => {
     expect(data).toHaveProperty('data')
   })
 
-  it.each(['os', 'device', 'country', 'referer'])('accepts the %s metric type', async (type) => {
+  it.each(['os', 'device', 'country', 'referer', 'utmSource'])('accepts the %s metric type', async (type) => {
     const response = await fetchWithAuth(`/api/stats/metrics?slug=0&type=${type}`)
     expect(response.status).toBe(200)
   })

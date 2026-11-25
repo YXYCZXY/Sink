@@ -58,6 +58,7 @@ export const useDashboardLinksSearchStore = defineStore('dashboard-links-search'
           limit: 20,
           status: linksStore.status,
           ...(linksStore.tag ? { tag: linksStore.tag } : {}),
+          ...(linksStore.utmSource ? { utm_source: linksStore.utmSource } : {}),
         },
       })
       if (generation === searchGeneration) {
@@ -94,6 +95,7 @@ export const useDashboardLinksSearchStore = defineStore('dashboard-links-search'
     const isExpired = Boolean(nextLink.expiration && nextLink.expiration <= Math.floor(Date.now() / 1000))
     const matchesCurrentFilters = (linksStore.status === 'expired') === isExpired
       && (!linksStore.tag || nextLink.tags?.includes(linksStore.tag))
+      && linkMatchesUtmSource(link.url, linksStore.utmSource)
     const matchesCurrentQuery = matchesCurrentFilters && normalizedQuery
       && [nextLink.slug, nextLink.url, nextLink.comment, ...(nextLink.tags ?? [])]
         .some(value => value?.toLocaleLowerCase().includes(normalizedQuery))
