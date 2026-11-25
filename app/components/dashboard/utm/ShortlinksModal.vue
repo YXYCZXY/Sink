@@ -7,7 +7,6 @@ const props = defineProps<{
   source: {
     value: string
     label: string
-    fallback?: boolean
   }
 }>()
 

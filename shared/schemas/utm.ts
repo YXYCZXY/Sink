@@ -8,8 +8,7 @@ export const UtmTokenSchema = z.preprocess(
   z.string().min(1).max(64).regex(/^[a-z0-9]+(?:[_-][a-z0-9]+)*$/, 'invalid UTM token'),
 )
 
-/** The fallback source keeps an empty value, so option payloads must allow it. */
-const UtmSourceValueSchema = z.union([z.literal(''), UtmTokenSchema])
+const UtmSourceValueSchema = UtmTokenSchema
 
 const UtmLabelSchema = z.string().trim().min(1).max(64)
 

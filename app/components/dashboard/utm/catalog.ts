@@ -16,7 +16,6 @@ export function isDuplicateUtmToken(existingValues: string[], value: string) {
 export interface UtmSourceEntry {
   value: string
   label: string
-  fallback?: boolean
   presets: UtmFieldPresets
 }
 
@@ -33,7 +32,6 @@ function toEntry(source: UtmCatalogSource): UtmSourceEntry {
   return {
     value: source.value,
     label: source.label,
-    fallback: source.fallback || undefined,
     presets: source.presets,
   }
 }
@@ -70,11 +68,10 @@ export function useUtmCatalog() {
       : source.presets[branch]
   }
 
-  /** Branch presets for the link editor: the matching source, else the fallback source. */
+  /** Branch presets for the link editor when utm_source matches a configured source. */
   function fieldPresets(sourceValue: string): UtmFieldPresets {
     const normalized = normalizeUtmToken(sourceValue)
     const source = sources.value.find(entry => entry.value === normalized)
-      ?? sources.value.find(entry => entry.fallback)
     return source?.presets ?? emptyPresets()
   }
 
@@ -89,7 +86,7 @@ export function useUtmCatalog() {
   async function removeSource(value: string) {
     const index = sources.value.findIndex(entry => entry.value === value)
     const entry = sources.value[index]
-    if (!entry || entry.fallback)
+    if (!entry)
       return -1
     await useAPI('/api/utm/source/delete', { method: 'POST', body: { value } })
     sources.value.splice(index, 1)

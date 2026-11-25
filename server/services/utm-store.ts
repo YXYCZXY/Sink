@@ -63,9 +63,6 @@ export async function deleteUtmSource(event: H3Event, value: string): Promise<vo
   if (!source) {
     throw createError({ status: 404, statusText: 'UTM source not found.' })
   }
-  if (source.fallback) {
-    throw createError({ status: 400, statusText: 'The fallback UTM source cannot be deleted.' })
-  }
   await db.delete(utmSources).where(eq(utmSources.value, value))
 }
 

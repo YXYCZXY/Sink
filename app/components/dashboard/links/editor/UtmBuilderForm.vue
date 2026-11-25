@@ -57,9 +57,7 @@ const validatedPreviewUrl = computed(() => {
 })
 
 const sourceOptions = computed(() =>
-  catalog.sources.value
-    .filter(source => !source.fallback)
-    .map(source => ({ value: source.value, label: source.label })),
+  catalog.sources.value.map(source => ({ value: source.value, label: source.label })),
 )
 
 const fieldPresets = computed(() => catalog.fieldPresets(utmValues.source))

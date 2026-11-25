@@ -45,9 +45,7 @@ function selectTag(value: unknown) {
   linksStore.tag = typeof value === 'string' && value !== allTagsValue ? value : undefined
 }
 
-const selectableUtmSources = computed(() =>
-  catalog.sources.value.filter(source => source.value && !source.fallback),
-)
+const selectableUtmSources = computed(() => catalog.sources.value)
 
 const utmCatalogLoading = computed(() => !catalog.loaded.value)
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { UtmBranchKey, UtmSourceEntry } from './catalog'
-import type { UtmOption } from '@/components/dashboard/links/editor/utm-presets'
+import type { UtmFieldPresets, UtmOption } from '@/components/dashboard/links/editor/utm-presets'
 import { GripVertical, Link2, Plus, Search, Trash2, X } from '@lucide/vue'
 import { toast } from 'vue-sonner'
 import { useUtmCatalog } from './catalog'
@@ -27,7 +27,7 @@ onMounted(async () => {
 })
 
 const query = shallowRef('')
-const selected = shallowRef('youtube')
+const selected = shallowRef('')
 const shortlinksOpen = shallowRef(false)
 const sourceModalOpen = shallowRef(false)
 const deleteDialogOpen = shallowRef(false)
@@ -36,11 +36,7 @@ const optionModal = shallowRef<{ branch: BranchConfig, sourceValue: string } | n
 const shortlinkCount = shallowRef<number | null>(null)
 let shortlinkCountGeneration = 0
 
-const sources = computed<UtmSourceEntry[]>(() =>
-  catalog.sources.value.map(source => source.fallback
-    ? { ...source, label: t('utm.fallback') }
-    : source),
-)
+const sources = computed<UtmSourceEntry[]>(() => catalog.sources.value)
 
 const filteredSources = computed(() => {
   const keyword = query.value.trim().toLowerCase()
@@ -52,11 +48,20 @@ const filteredSources = computed(() => {
   )
 })
 
-const activeSource = computed<UtmSourceEntry>(() =>
-  sources.value.find(source => source.value === selected.value) ?? sources.value[0]!,
+const activeSource = computed((): UtmSourceEntry | undefined =>
+  sources.value.find(source => source.value === selected.value) ?? sources.value[0],
 )
 
-const presets = computed(() => activeSource.value.presets)
+function emptyUtmPresets(): UtmFieldPresets {
+  return {
+    medium: [],
+    campaign: [],
+    term: [],
+    content: { categories: [], themes: [] },
+  }
+}
+
+const presets = computed(() => activeSource.value?.presets ?? emptyUtmPresets())
 
 const branches = computed(() => [
   { key: 'medium', title: t('utm.medium'), param: 'utm_medium', options: presets.value.medium, addLabel: t('utm.add_medium') },
@@ -79,7 +84,7 @@ function selectSource(source: UtmSourceEntry) {
 
 async function refreshShortlinkCount() {
   const generation = ++shortlinkCountGeneration
-  const sourceValue = activeSource.value.value
+  const sourceValue = activeSource.value?.value
   if (!sourceValue) {
     shortlinkCount.value = 0
     return
@@ -103,7 +108,7 @@ async function refreshShortlinkCount() {
 }
 
 watch(
-  () => activeSource.value.value,
+  () => activeSource.value?.value,
   () => {
     void refreshShortlinkCount()
   },
@@ -120,7 +125,10 @@ function optionKey(branch: string, option: UtmOption) {
 }
 
 function openBranchModal(branch: BranchConfig) {
-  optionModal.value = { branch, sourceValue: activeSource.value.value }
+  const source = activeSource.value
+  if (!source)
+    return
+  optionModal.value = { branch, sourceValue: source.value }
 }
 
 async function submitSource(entry: { value: string, label: string }) {
@@ -148,8 +156,11 @@ async function submitOption(option: UtmOption) {
 }
 
 async function removeBranchOption(branch: BranchConfig, option: UtmOption) {
+  const source = activeSource.value
+  if (!source)
+    return
   try {
-    await catalog.removeOption(activeSource.value.value, branch.key, option.value)
+    await catalog.removeOption(source.value, branch.key, option.value)
   }
   catch {
     toast.error(t('utm.save_failed'))
@@ -157,15 +168,19 @@ async function removeBranchOption(branch: BranchConfig, option: UtmOption) {
 }
 
 function openDeleteDialog() {
-  if (activeSource.value.fallback)
+  const source = activeSource.value
+  if (!source)
     return
-  deleteTargetLabel.value = activeSource.value.label
+  deleteTargetLabel.value = source.label
   deleteDialogOpen.value = true
 }
 
 async function confirmDeleteSource() {
+  const source = activeSource.value
+  if (!source)
+    return
   try {
-    const removedIndex = await catalog.removeSource(activeSource.value.value)
+    const removedIndex = await catalog.removeSource(source.value)
     if (removedIndex === -1)
       return
     const next = sources.value[Math.min(removedIndex, sources.value.length - 1)]
@@ -190,11 +205,15 @@ async function confirmDeleteSource() {
   <div
     v-else-if="!sources.length"
     class="
-      rounded-2xl border border-dashed p-6 text-center text-sm
-      text-muted-foreground
+      flex flex-col items-center gap-4 rounded-2xl border border-dashed p-8
+      text-center text-sm text-muted-foreground
     "
   >
-    {{ $t('utm.load_failed') }}
+    <p>{{ $t('utm.empty_sources') }}</p>
+    <Button variant="outline" size="sm" type="button" @click="sourceModalOpen = true">
+    <Plus class="size-3.5" />
+      {{ $t('utm.new_source') }}
+    </Button>
   </div>
   <div
     v-else
@@ -248,7 +267,7 @@ async function confirmDeleteSource() {
       <div class="space-y-2">
         <button
           v-for="source in filteredSources"
-          :key="source.value || 'fallback'"
+          :key="source.value"
           type="button"
           class="
             flex w-full items-center gap-2.5 rounded-2xl border bg-card p-3
@@ -271,7 +290,7 @@ async function confirmDeleteSource() {
               {{ source.label }}
             </span>
             <code class="block truncate text-[11px] text-muted-foreground">
-              {{ source.fallback ? '* (fallback)' : source.value }}
+              {{ source.value }}
             </code>
           </span>
         </button>
@@ -279,7 +298,7 @@ async function confirmDeleteSource() {
     </aside>
 
     <!-- Right column: branch management -->
-    <section class="flex min-w-0 flex-1 flex-col gap-5">
+    <section v-if="activeSource" class="flex min-w-0 flex-1 flex-col gap-5">
       <!-- Active source header -->
       <Card size="sm" class="flex-row items-center justify-between gap-4 px-4">
         <h2 class="text-sm font-bold">
@@ -295,8 +314,6 @@ async function confirmDeleteSource() {
           </Button>
           <Button
             variant="ghost" size="sm" type="button" class="text-destructive"
-            :disabled="activeSource.fallback"
-            :title="activeSource.fallback ? $t('utm.fallback_locked') : undefined"
             @click="openDeleteDialog"
           >
             <Trash2 class="size-3.5" />
@@ -466,13 +483,9 @@ async function confirmDeleteSource() {
     </section>
 
     <DashboardUtmShortlinksModal
+      v-if="activeSource"
       v-model:open="shortlinksOpen"
       :source="activeSource"
-    />
-    <DashboardUtmSourceModal
-      v-model:open="sourceModalOpen"
-      :existing-values="catalog.sourceValues()"
-      @submit="submitSource"
     />
     <DashboardUtmOptionModal
       :open="optionModal !== null"
@@ -487,4 +500,10 @@ async function confirmDeleteSource() {
       @confirm="confirmDeleteSource"
     />
   </div>
+
+  <DashboardUtmSourceModal
+    v-model:open="sourceModalOpen"
+    :existing-values="catalog.sourceValues()"
+    @submit="submitSource"
+  />
 </template>

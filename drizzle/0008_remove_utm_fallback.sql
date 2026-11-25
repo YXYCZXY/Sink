@@ -1,0 +1,1 @@
+DELETE FROM `utm_sources` WHERE `value` = '' OR `fallback` = 1;

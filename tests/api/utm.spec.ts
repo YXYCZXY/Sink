@@ -27,20 +27,9 @@ describe('/api/utm', () => {
     expect(response.status).toBe(401)
   })
 
-  it('returns the seeded catalog', async () => {
+  it('returns an empty catalog by default', async () => {
     const catalog = await getCatalog()
-    const fallback = catalog.find(source => source.fallback)
-    expect(fallback).toBeDefined()
-    expect(fallback?.value).toBe('')
-    expect(fallback?.presets.medium.length).toBeGreaterThan(0)
-
-    const youtube = catalog.find(source => source.value === 'youtube')
-    expect(youtube?.label).toBe('YouTube')
-    expect(youtube?.presets.medium.map(option => option.value)).toContain('video')
-    expect(youtube?.presets.content.categories.map(option => option.value)).toContain('shorts')
-
-    const blog = catalog.find(source => source.value === 'blog')
-    expect(blog?.presets.campaign.map(option => option.value)).toContain('series')
+    expect(catalog).toEqual([])
   })
 
   it('creates and deletes a source', async () => {
@@ -59,6 +48,7 @@ describe('/api/utm', () => {
 
     const deleted = await postJson('/api/utm/source/delete', { value })
     expect(deleted.status).toBe(200)
+
     createdSources.delete(value)
 
     const afterDelete = await getCatalog()
@@ -67,11 +57,6 @@ describe('/api/utm', () => {
 
   it('rejects invalid source tokens', async () => {
     const response = await postJson('/api/utm/source', { value: 'Bad Token!', label: 'Bad' })
-    expect(response.status).toBe(400)
-  })
-
-  it('protects the fallback source from deletion', async () => {
-    const response = await postJson('/api/utm/source/delete', { value: '' })
     expect(response.status).toBe(400)
   })
 
@@ -108,16 +93,10 @@ describe('/api/utm', () => {
   })
 
   it('rejects unknown branches', async () => {
-    const response = await postJson('/api/utm/option', { source: 'youtube', branch: 'banner', value: 'email', label: 'Email' })
+    const value = trackSource(`test-${crypto.randomUUID().slice(0, 8)}`)
+    await postJson('/api/utm/source', { value, label: 'Test Source' })
+
+    const response = await postJson('/api/utm/option', { source: value, branch: 'banner', value: 'email', label: 'Email' })
     expect(response.status).toBe(400)
-  })
-
-  it('allows options on the fallback source', async () => {
-    const value = `test-${crypto.randomUUID().slice(0, 8)}`
-    const created = await postJson('/api/utm/option', { source: '', branch: 'term', value, label: 'Temp' })
-    expect(created.status).toBe(201)
-
-    const deleted = await postJson('/api/utm/option/delete', { source: '', branch: 'term', value })
-    expect(deleted.status).toBe(200)
   })
 })
