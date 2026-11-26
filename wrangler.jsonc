@@ -21,10 +21,6 @@
       "enabled": true
     }
   },
-  "ai": {
-    "binding": "AI",
-    "remote": true
-  },
   // Values marked with DEPLOY_* below are placeholders for local/dev.
   // CLI deploy (pnpm deploy:worker / deploy:config) rewrites them into gitignored wrangler.deploy.jsonc.
   // Prefer setting DEPLOY_* in .env or Workers Builds / Pages variables — do not hardcode production IDs here.
@@ -37,16 +33,18 @@
   "kv_namespaces": [
     {
       "binding": "KV",
-      "preview_id": "ef93d42dc4b34969bab404d2e80f8dd3", // Override with DEPLOY_KV_PREVIEW_NAMESPACE_ID (falls back to DEPLOY_KV_NAMESPACE_ID)
-      "id": "ef93d42dc4b34969bab404d2e80f8dd3" // Override with DEPLOY_KV_NAMESPACE_ID
+      "preview_id": "d4fbea7fa68343d4a28adcfacca55001", // Override with DEPLOY_KV_PREVIEW_NAMESPACE_ID (falls back to DEPLOY_KV_NAMESPACE_ID)
+      "id": "d4fbea7fa68343d4a28adcfacca55001", // Override with DEPLOY_KV_NAMESPACE_ID
+      "remote": true
     }
   ],
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "sink", // Override with DEPLOY_D1_DATABASE_NAME (default: sink)
-      "database_id": "ef964055-65bf-4b78-b109-ac9c9290ae62", // Override with DEPLOY_D1_DATABASE_ID (required for CLI deploy)
-      "migrations_dir": "drizzle"
+      "database_id": "ca3b1af7-4ed6-43ae-ae40-cd6b5f85ad70", // Override with DEPLOY_D1_DATABASE_ID (required for CLI deploy)
+      "migrations_dir": "drizzle",
+      "remote": true
     }
   ],
   "r2_buckets": [

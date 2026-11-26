@@ -81,7 +81,15 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2026-07-13',
   nitro: {
-    preset: import.meta.env.CF_PAGES !== '1' ? 'cloudflare-module' : undefined,
+    devProxy: {
+      '/api/': {
+        target: 'https://go.mipmap3d.com/api/',
+        changeOrigin: true,
+      },
+    },
+    preset: process.env.NODE_ENV === 'development'
+      ? 'nitro-dev'
+      : (import.meta.env.CF_PAGES !== '1' ? 'cloudflare-module' : undefined),
     experimental: {
       openAPI: true,
     },

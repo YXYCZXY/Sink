@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { MetricItem } from '@/types'
 import { LoaderCircle } from '@lucide/vue'
+import { utmSourceFromLinkUrl } from '#shared/utils/utm-source'
 
 const props = defineProps<{
   type: string
@@ -29,19 +30,42 @@ watch([() => analysisStore.dateRange, () => analysisStore.filters, retryKey], as
   loading.value = true
   error.value = false
   try {
-    const result = await useAPI<{ data: RawMetricData[] }>('/api/stats/metrics', {
-      signal: controller.signal,
-      query: {
-        ...analysisStore.filters,
-        type: props.type,
-        id: id.value,
-        startAt: analysisStore.dateRange.startAt,
-        endAt: analysisStore.dateRange.endAt,
-      },
-    })
-    if (!controller.signal.aborted && Array.isArray(result.data)) {
-      total.value = result.data.reduce((acc, cur) => acc + Number(cur.count), 0)
-      metrics.value = result.data.map(item => ({
+    const query = {
+      ...analysisStore.filters,
+      id: id.value,
+      startAt: analysisStore.dateRange.startAt,
+      endAt: analysisStore.dateRange.endAt,
+    }
+    let data: RawMetricData[]
+    if (props.type === 'utmSource') {
+      const events = await useAPI<{ url: string }[]>('/api/logs/events', {
+        signal: controller.signal,
+        query: { ...query, limit: 500 },
+      })
+      if (controller.signal.aborted)
+        return
+
+      const platformCounts = new Map<string, number>()
+      for (const event of events) {
+        const platform = utmSourceFromLinkUrl(event.url) ?? ''
+        platformCounts.set(platform, (platformCounts.get(platform) ?? 0) + 1)
+      }
+      data = Array.from(platformCounts, ([name, count]) => ({ name, count }))
+        .sort((left, right) => right.count - left.count)
+
+      if (events.length === 500)
+        console.warn('[Platform statistics] The 500-record limit was reached. Counts cover returned records only, not necessarily the full selected period.')
+    }
+    else {
+      const result = await useAPI<{ data: RawMetricData[] }>('/api/stats/metrics', {
+        signal: controller.signal,
+        query: { ...query, type: props.type },
+      })
+      data = result.data
+    }
+    if (!controller.signal.aborted && Array.isArray(data)) {
+      total.value = data.reduce((acc, cur) => acc + Number(cur.count), 0)
+      metrics.value = data.map(item => ({
         ...item,
         percent: Math.floor(item.count / total.value * 100) || (item.count ? 1 : 0),
       }))
